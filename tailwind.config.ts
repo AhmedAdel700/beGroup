@@ -9,8 +9,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
+        background: "#6D5CBC0D",
         foreground: "var(--foreground)",
+        customGreen: "#49BD88",
+        customPurple: "#6D5CBC",
+      },
+      boxShadow: {
+        "top-bottom":
+          "5px 10px 20px 5px white inset",
       },
     },
   },

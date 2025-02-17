@@ -1,0 +1,28 @@
+{
+  "Header": {
+    "Home": "Home",
+    "Categories": "Categories",
+    "Contact Us": "Contact us",
+    "About": "About"
+  },
+  "Footer": {
+    "All Rights Reserved": "All Rights Reserved",
+    "Digifly 2024": "Digifly 2024"
+  },
+  "Part1": {
+    "Part 1": "Part 1",
+    "First Name": "First Name",
+    "Last Name": "Last Name",
+    "Email": "Email",
+    "Mobile": "Mobile",
+    "Mobile Number": "Mobile Number",
+    "Send": "Send",
+    "Results": "Results"
+  },
+  "Part2": {
+    "Part 2": "Part 2"
+  },
+  "Part3": {
+    "Part 3": "Part 3"
+  }
+}
