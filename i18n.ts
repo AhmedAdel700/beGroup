@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getRequestConfig } from "next-intl/server";
+import { getRequestConfig, GetRequestConfigParams } from "next-intl/server";
 import enMessages from "./app/messages/en.json";
 import arMessages from "./app/messages/ar.json";
 
@@ -10,12 +10,11 @@ const messagesMap: Record<(typeof locales)[number], typeof enMessages> = {
   ar: arMessages,
 };
 
-// Ensure locale is typed as 'en' | 'ar'
-export default getRequestConfig(async ({ locale }: { locale: "en" | "ar" }) => {
-  if (!locales.includes(locale)) notFound();
+export default getRequestConfig(async ({ locale }: GetRequestConfigParams) => {
+  if (!locales.includes(locale as "en" | "ar")) notFound();
 
   return {
-    locale, // Ensure locale is returned
-    messages: messagesMap[locale],
+    locale,
+    messages: messagesMap[locale as "en" | "ar"],
   };
 });
