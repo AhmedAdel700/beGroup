@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# For Starting The Project
 
-## Getting Started
+## This Project Consists Of 2 Parts : The Frontend And The Strapi API
 
-First, run the development server:
+- File Structure: 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **/frontend**
+- **/Frontend-Assessment-Backend**
+- Both folders are located at the same level inside the project root directory.
+
+## Strapi API Repo Is Not Included In The Repository
+
+### Installation For Frontend:
+
+1. clone this project(repo) or download it localy
+2. cd frontend
+3. install the required packages via npm install
+4. run the following command to start the project => npm run dev
+
+### For Strapi API Please Follow The Following Instructions:
+
+## Setup and Running Strapi API Locally
+
+### Prerequisites
+
+- Node.js (Refer to [Node.js website](https://nodejs.org/) for installation)
+- npm (Usually comes with Node.js installation)
+- Strapi (This project requires Strapi to be installed globally)
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/DigiFly-Development/Frontend-Assessment-Backend.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd Frontend-Assessment-Backend
+   ```
+3. Install Strapi globally (if not already installed):
+   ```
+   npm install strapi -g
+   ```
+4. Install project dependencies:
+   ```
+   npm install
+   ```
+5. Start the Strapi server in development mode:
+   ```
+   strapi start
+   ```
+
+**Important Note:** If you face an issue while using `npm install` and receive a network error, you might need to delete the existing `node_modules` folder and rerun the `npm install` command.
+
+## API Endpoints
+
+### `/user-informations` (GET)
+
+Retrieves a list of user information entries from the database.
+
+**Usage:**
+
+```
+GET http://localhost:1337/user-informations
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### `/user-informations` (POST)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Submits new user information to the database.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Request Body Format:**
 
-## Learn More
+```
+{
+  "FirstName": "Test",
+  "LastName": "Name",
+  "Email": "testmail@email.com",
+  "Phone": "501105191001"
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Usage:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+POST http://localhost:1337/user-informations
+```

@@ -54,13 +54,42 @@ export default function Part3() {
     }
   };
 
+  const applyFormatting = (list: string) => {
+    const textarea = document.querySelector("textarea") as HTMLTextAreaElement;
+    if (!textarea) return;
+
+    const { selectionStart, selectionEnd, value } = textarea;
+    if (selectionStart === selectionEnd) return; // No text selected
+
+    const selectedText = value.substring(selectionStart, selectionEnd);
+    let formattedText = selectedText;
+
+    if (list) {
+      const lines = selectedText
+        .split("\n")
+        .map((line, index) => `${index + 1}. ${line}`);
+      formattedText = lines.join("\n");
+    }
+
+    const newText =
+      value.substring(0, selectionStart) +
+      formattedText +
+      value.substring(selectionEnd);
+
+    setText(newText);
+  };
+
   const handleButtonClick = (iconName: string, action: () => void) => {
     setActiveButton(activeButton === iconName ? null : iconName);
     action();
   };
 
   const editorControllers = [
-    { icon: numberedList, name: "numberedList", onClick: () => {} },
+    {
+      icon: numberedList,
+      name: "numberedList",
+      onClick: () => applyFormatting("list"),
+    },
     { icon: listBullet, name: "listBullet", onClick: () => {} },
     { icon: barsCenterLeft, name: "barsCenterLeft", onClick: () => {} },
     { icon: barsLeft, name: "barsLeft", onClick: () => {} },
@@ -116,7 +145,7 @@ export default function Part3() {
           ))}
           <select
             className="bg-transparent py-1 rounded text-xs md:text-sm"
-            value={"Sans Serif"}
+            defaultValue={"Sans Serif"}
           >
             <option value="Sans Serif">Sans Serif</option>
           </select>

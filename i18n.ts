@@ -11,9 +11,11 @@ const messagesMap: Record<(typeof locales)[number], typeof enMessages> = {
 };
 
 export default getRequestConfig(async ({ locale }) => {
-  if (!locales.includes(locale ?? "")) notFound();
+  if (!locales.includes(locale)) notFound();
 
   return {
+    locale, // Ensure locale is returned
     messages: messagesMap[locale as keyof typeof messagesMap],
   };
 });
+
