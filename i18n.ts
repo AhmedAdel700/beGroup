@@ -10,12 +10,12 @@ const messagesMap: Record<(typeof locales)[number], typeof enMessages> = {
   ar: arMessages,
 };
 
-export default getRequestConfig(async ({ locale }) => {
+// Ensure locale is typed as 'en' | 'ar'
+export default getRequestConfig(async ({ locale }: { locale: "en" | "ar" }) => {
   if (!locales.includes(locale)) notFound();
 
   return {
     locale, // Ensure locale is returned
-    messages: messagesMap[locale as keyof typeof messagesMap],
+    messages: messagesMap[locale],
   };
 });
-
