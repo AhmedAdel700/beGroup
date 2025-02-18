@@ -1,11 +1,8 @@
 /* styles/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-@import 'leaflet/dist/leaflet.css';
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
 
 /* :root {
   --background: #ffffff;
@@ -22,9 +19,43 @@
 body {
   /* color: var(--foreground);
   background: var(--background); */
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 a {
   color: #000;
 }
+
+.leaflet-popup-content-wrapper {
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  background-color: #6d5cbc !important;
+  margin-right: 5rem !important;
+  border-radius: 8px !important;
+  box-shadow: #6d5cbc 0px 2px 8px 0px !important;
+}
+
+/* Styles for the popup */
+.leaflet-popup-content {
+  background-color: #6d5cbc; /* Background color */
+  color: white; /* Text color */
+  font-family: "Poppins", sans-serif; /* Font */
+  font-size: 1rem !important; /* Font size */
+  width: 200px !important; /* Popup width */
+  height: 65px !important; /* Popup height */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Horizontal centering */
+  flex-direction: column;
+  text-align: left; /* Center text */
+  border-radius: 8px !important;
+}
+
+/* Style for the popup tip */
+.leaflet-popup-tip {
+  background-color: #6d5cbc !important; /* Red background for the tip */
+  border-color: #6d5cbc !important;
+  border-width: 6px !important; /* Make the tip border thicker */
+  width: 20px !important; /* Width of the arrow */
+  height: 20px !important; /* Height of the arrow */
+}
+
