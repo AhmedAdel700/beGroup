@@ -20,20 +20,27 @@ import {
 
 export default function Part3() {
   const t = useTranslations("Part3");
+
   // State for current text value
   const [text, setText] = useState("");
-  // Ref to keep the history stack for undo/redo
-  const history = useRef<string[]>([text]);
-  const historyIndex = useRef<number>(0);
   const [activeButton, setActiveButton] = useState<string | null>(null);
+
+  // Ref for textarea
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Undo/Redo history
+  const history = useRef<string[]>([""]);
+  const historyIndex = useRef<number>(0);
 
   // Handle text changes
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.target.value;
     setText(newText);
 
-    // If we are in the middle of the history stack, discard future history
-    history.current = history.current.slice(0, historyIndex.current + 1);
+    // Maintain history stack
+    if (historyIndex.current < history.current.length - 1) {
+      history.current = history.current.slice(0, historyIndex.current + 1);
+    }
     history.current.push(newText);
     historyIndex.current++;
   };
@@ -54,33 +61,39 @@ export default function Part3() {
     }
   };
 
-  const applyFormatting = (list: string) => {
-    const textarea = document.querySelector("textarea") as HTMLTextAreaElement;
-    if (!textarea) return;
+  // Formatting function
+  const applyFormatting = (type: "numbered" | "bullet") => {
+    if (!textareaRef.current) return;
 
+    const textarea = textareaRef.current;
     const { selectionStart, selectionEnd, value } = textarea;
-    if (selectionStart === selectionEnd) return; // No text selected
+    if (selectionStart === selectionEnd) return;
 
     const selectedText = value.substring(selectionStart, selectionEnd);
     let formattedText = selectedText;
 
-    if (list) {
-      const lines = selectedText
+    if (type === "numbered") {
+      formattedText = selectedText
         .split("\n")
-        .map((line, index) => `${index + 1}. ${line}`);
-      formattedText = lines.join("\n");
+        .map((line, index) => `${index + 1}. ${line}`)
+        .join("\n");
+    } else if (type === "bullet") {
+      formattedText = selectedText
+        .split("\n")
+        .map((line) => `• ${line}`)
+        .join("\n");
     }
 
     const newText =
       value.substring(0, selectionStart) +
       formattedText +
       value.substring(selectionEnd);
-
     setText(newText);
   };
 
-  const handleButtonClick = (iconName: string, action: () => void) => {
-    setActiveButton(activeButton === iconName ? null : iconName);
+  // Button click handler
+  const handleButtonClick = (name: string, action: () => void) => {
+    setActiveButton(name);
     action();
   };
 
@@ -88,9 +101,13 @@ export default function Part3() {
     {
       icon: numberedList,
       name: "numberedList",
-      onClick: () => applyFormatting("list"),
+      onClick: () => applyFormatting("numbered"),
     },
-    { icon: listBullet, name: "listBullet", onClick: () => {} },
+    {
+      icon: listBullet,
+      name: "listBullet",
+      onClick: () => applyFormatting("bullet"),
+    },
     { icon: barsCenterLeft, name: "barsCenterLeft", onClick: () => {} },
     { icon: barsLeft, name: "barsLeft", onClick: () => {} },
     { icon: bars, name: "bars", onClick: () => {} },
@@ -120,9 +137,9 @@ export default function Part3() {
             border: "2px solid #0000001A",
             margin: "0 auto",
             backgroundColor: "#0000000D",
-            display: "flex", // Flex container for horizontal layout
-            alignItems: "center", // Align icons vertically
-            justifyContent: "space-evenly", // Space the icons evenly
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
             flexWrap: "wrap",
           }}
         >
@@ -133,10 +150,10 @@ export default function Part3() {
                 activeButton === btn.name
                   ? "bg-green-500 text-white"
                   : "bg-transparent text-black"
-              }`} // Space the icons and separator
+              }`}
             >
               <button
-                className={`m-auto p-2 rounded transition`}
+                className="m-auto p-2 rounded transition"
                 onClick={() => handleButtonClick(btn.name, btn.onClick)}
               >
                 {btn.icon}
@@ -161,6 +178,7 @@ export default function Part3() {
           }}
         >
           <textarea
+            ref={textareaRef}
             style={{
               width: "100%",
               height: "100%",
